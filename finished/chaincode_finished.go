@@ -55,8 +55,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	// Handle different functions
 	if function == "init" {
 		return t.Init(stub, "init", args)
-	} else if function == "write" {
-		return t.write(stub, args)
+	} else if function == "enterHDWHLedgerDetails" {
+		return t.enterHDWHLedgerDetails(stub,"write", args)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
@@ -68,7 +68,7 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 
 	// Handle different functions
 	if function == "write" {
-		return t.Invoke(stub, "init", args)
+		return t.write(stub, args)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
