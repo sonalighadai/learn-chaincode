@@ -126,7 +126,7 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 				// ... Ignore errors.
 				b, _ := json.Marshal(warehouse)
 				// Convert bytes to string.
-				s := string(b)
+				s = string(b)
 				args[1]=s
 			}
 		}
