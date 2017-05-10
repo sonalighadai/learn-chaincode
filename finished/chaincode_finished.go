@@ -26,6 +26,38 @@ import (
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
+type ledger struct {
+	Vendor string
+	Time string
+	Geolocation string
+	Vehicleno string
+	Vehicletype string
+	Items []struct{
+		Name string
+		Desc string
+		Qty int
+	}
+	Defects []struct{
+		Name string
+		Desc string
+		Qty int
+	}
+
+}
+
+type Warehouse struct {
+	Vendor string
+	Time string
+	Geolocation string
+	Vehicleno string
+	Vehicletype string
+	Name string
+	Desc string
+	ScannedItem int
+	Defect int
+}
+
+
 
 func main() {
 	err := shim.Start(new(SimpleChaincode))
@@ -65,7 +97,38 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
-
+        
+	value = args[1]
+        bytes := []byte(value)
+	
+	// Unmarshal string into structs.
+	var languages []ledger
+	json.Unmarshal(bytes, &languages)
+	
+	// Loop over structs and display them.
+	for l := range languages {
+		for item := range languages[l].Items {
+			for defect := range languages[l].Defects {
+				warehouse := Warehouse{
+					Vendor: languages[l].Vendor,
+					Time: languages[l].Time,
+					Geolocation: languages[l].Geolocation,
+					Vehicleno: languages[l].Vehicleno,
+					Vehicletype: languages[l].Vehicletype,
+					Name: languages[l].Items[item].Name,
+					Desc: languages[l].Items[item].Desc,
+					ScannedItem: languages[l].Items[item].Qty-languages[l].Defects[defect].Qty,
+					Defect: languages[l].Defects[defect].Qty,
+				}
+				// Create JSON from the instance data.
+				// ... Ignore errors.
+				b, _ := json.Marshal(warehouse)
+				// Convert bytes to string.
+				s := string(b)
+				args[1]=s
+			}
+		}
+	}
 	// Handle different functions
 	if function == "write" {
 		return t.write(stub, args)
@@ -100,9 +163,6 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 
 	key = args[0] //rename for funsies
 	value = args[1]
-	fmt.Println(value)
-	strB, _ := json.Marshal(value)
-	fmt.Println(string(strB))
 	err = stub.PutState(key, []byte(value)) //write the variable into the chaincode state
 	if err != nil {
 		return nil, err
