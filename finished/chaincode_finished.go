@@ -88,7 +88,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	if function == "init" {
 		return t.Init(stub, "init", args)
 	} else if function == "enterHDWHLedgerDetails" {
-		t.enterHDWHLedgerDetails(stub,"write", args)
+		 return t.enterHDWHLedgerDetails(stub,"write", args)
 	}else if function == "write" { //read a variable
 		return t.write(stub, args)
 	}
