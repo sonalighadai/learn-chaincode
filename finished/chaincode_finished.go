@@ -99,7 +99,9 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 
 func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
-	var s, value string
+	var key, s, value string
+	str := make([]string, 2)
+	key = args[0]
         value = args[1]
         bytes := []byte(value)
 	
@@ -127,14 +129,16 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 				b, _ := json.Marshal(warehouse)
 				// Convert bytes to string.
 				s = string(b)
-				args[1] := s
+				str[0] = key
+                                str[1] = s
+				
 			}
 		}
 	}
 	
 	// Handle different functions
 	if function == "write" {
-		return t.write(stub, args)
+		return t.write(stub, str)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
