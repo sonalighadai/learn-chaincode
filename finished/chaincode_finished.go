@@ -138,7 +138,7 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 	
 	// Handle different functions
 	if function == "write" {
-		t.write(stub, str)
+		 return t.write(stub, str)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
