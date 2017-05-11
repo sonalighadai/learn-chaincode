@@ -98,7 +98,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 }
 
 func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Println("invoke is running " + function)
+	fmt.Println("enterHDWHLedgerDetails is running " + function)
 	var key, s, value string
 	str := make([]string, 2)
 	key = args[0]
@@ -140,7 +140,7 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 	if function == "enterHDWHLedgerDetails" {
 		 return t.write(stub, str)
 	}
-	fmt.Println("invoke did not find func: " + function)
+	fmt.Println("enterHDWHLedgerDetails did not find func: " + function)
 
 	return nil, errors.New("Received unknown function invocation: " + function)
 }
@@ -187,8 +187,7 @@ func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) 
 	}
 
 	key = args[0]
-	//valAsbytes, err := stub.GetState(key)
-	  valAsbytes, err := stub.GetPayload()
+	valAsbytes, err := stub.GetState(key)
 	if err != nil {
 		jsonResp = "{\"Error\":\"Failed to get state for " + key + "\"}"
 		return nil, errors.New(jsonResp)
