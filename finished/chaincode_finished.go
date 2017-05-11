@@ -137,12 +137,12 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 	}
 	
 	// Handle different functions
-	if function == "writ" {
+	if function == "write" {
 		 return t.write(stub, str)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
-	return nil, errors.New("Received unknown function invocation: " + str[1])
+	return nil, errors.New("Received unknown function invocation: " + function)
 }
 
 // Query is our entry point for queries
@@ -164,8 +164,8 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string)
 	var err error
 	fmt.Println("running write()")
 
-	if len(args) != 2 {
-		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	if len(args) != 1 {
+		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set" + args[1])
 	}
 
 	key = args[0] //rename for funsies
