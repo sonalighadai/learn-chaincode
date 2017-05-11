@@ -28,7 +28,7 @@ type SimpleChaincode struct {
 }
 
 type ledger struct {
-	Vendor string
+	//Vendor string
 	Time string
 	Geolocation string
 	Vehicleno string
@@ -114,7 +114,7 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 		for item := range languages[l].Items {
 			for defect := range languages[l].Defects {
 				warehouse := Warehouse{
-					Vendor: languages[l].Vendor,
+					//Vendor: languages[l].Vendor,
 					Time: languages[l].Time,
 					Geolocation: languages[l].Geolocation,
 					Vehicleno: languages[l].Vehicleno,
