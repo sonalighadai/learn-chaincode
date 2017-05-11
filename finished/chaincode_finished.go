@@ -87,8 +87,14 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	// Handle different functions
 	if function == "init" {
 		return t.Init(stub, "init", args)
-	} else if function == "enterHDWHLedgerDetails" {
-		 return t.enterHDWHLedgerDetails(stub, function, args)
+	} else if function == "enterFactoryOffboardingDetails" {
+		 return t.enterFactoryOffboardingDetails(stub, function, args)
+	}else if function == "enterWarehouseOffboardingDetails" {
+		 return t.enterWarehouseOffboardingDetails(stub, function, args)
+	}else if function == "enterDistributionCenterOffboardingDetails" {
+		 return t.enterDistributionCenterOffboardingDetails(stub, function, args)
+	}else if function == "enterRetailOffboardingDetails" {
+		 return t.enterRetailOffboardingDetails(stub, function, args)
 	}else if function == "write" { //read a variable
 		return t.write(stub, args)
 	}
@@ -97,50 +103,50 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	return nil, errors.New("Received unknown function invocation: " + function)
 }
 
-func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Println("enterHDWHLedgerDetails is running " + function)
-	var key, s, value string
-	str := make([]string, 2)
-	key = args[0]
-        value = args[1]
-        bytes := []byte(value)
-	
-	// Unmarshal string into structs.
-	var languages []ledger
-	json.Unmarshal(bytes, &languages)
-	
-	// Loop over structs and display them.
-	for l := range languages {
-		for item := range languages[l].Items {
-			for defect := range languages[l].Defects {
-				warehouse := Warehouse{
-					//Vendor: languages[l].Vendor,
-					Time: languages[l].Time,
-					Geolocation: languages[l].Geolocation,
-					Vehicleno: languages[l].Vehicleno,
-					Vehicletype: languages[l].Vehicletype,
-					Name: languages[l].Items[item].Name,
-					Desc: languages[l].Items[item].Desc,
-					ScannedItem: languages[l].Items[item].Qty-languages[l].Defects[defect].Qty,
-					Defect: languages[l].Defects[defect].Qty,
-				}
-				// Create JSON from the instance data.
-				// ... Ignore errors.
-				b, _ := json.Marshal(warehouse)
-				// Convert bytes to string.
-				s = string(b)
-				str[0] = key
-                                str[1] = s
-				
-			}
-		}
-	}
+func (t *SimpleChaincode) enterFactoryOffboardingDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Println("enterFactoryOffboardingDetails is running " + function)
 	
 	// Handle different functions
-	if function == "enterHDWHLedgerDetails" {
-		 return t.write(stub, str)
+	if function == "enterFactoryOffboardingDetails" {
+		 return t.write(stub, args)
 	}
-	fmt.Println("enterHDWHLedgerDetails did not find func: " + function)
+	fmt.Println("enterFactoryOffboardingDetails did not find func: " + function)
+
+	return nil, errors.New("Received unknown function invocation: " + function)
+}
+
+func (t *SimpleChaincode) enterWarehouseOffboardingDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Println("enterWarehouseOffboardingDetails is running " + function)
+	
+	// Handle different functions
+	if function == "enterWarehouseOffboardingDetails" {
+		 return t.write(stub, args)
+	}
+	fmt.Println("enterWarehouseOffboardingDetails did not find func: " + function)
+
+	return nil, errors.New("Received unknown function invocation: " + function)
+}
+
+func (t *SimpleChaincode) enterDistributionCenterOffboardingDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Println("enterDistributionCenterOffboardingDetails is running " + function)
+	
+	// Handle different functions
+	if function == "enterDistributionCenterOffboardingDetails" {
+		 return t.write(stub, args)
+	}
+	fmt.Println("enterDistributionCenterOffboardingDetails did not find func: " + function)
+
+	return nil, errors.New("Received unknown function invocation: " + function)
+}
+
+func (t *SimpleChaincode) enterRetailOffboardingDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+	fmt.Println("enterRetailOffboardingDetails is running " + function)
+	
+	// Handle different functions
+	if function == "enterRetailOffboardingDetails" {
+		 return t.write(stub, args)
+	}
+	fmt.Println("enterRetailOffboardingDetails did not find func: " + function)
 
 	return nil, errors.New("Received unknown function invocation: " + function)
 }
