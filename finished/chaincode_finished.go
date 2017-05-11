@@ -94,7 +94,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	}
 	fmt.Println("invoke did not find func: " + function)
 
-	return nil, errors.New("Received unknown function invocation: " + args[1])
+	return nil, errors.New("Received unknown function invocation: " + function)
 }
 
 func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
@@ -137,12 +137,12 @@ func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterfac
 	}
 	
 	// Handle different functions
-	if function == "write" {
+	if function == "writ" {
 		 return t.write(stub, str)
 	}
 	fmt.Println("invoke did not find func: " + function)
 
-	return nil, errors.New("Received unknown function invocation: " + function)
+	return nil, errors.New("Received unknown function invocation: " + str[1])
 }
 
 // Query is our entry point for queries
