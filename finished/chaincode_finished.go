@@ -94,7 +94,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 	}
 	fmt.Println("invoke did not find func: " + function)
 
-	return nil, errors.New("Received unknown function invocation: " + args)
+	return nil, errors.New("Received unknown function invocation: " + args[1])
 }
 
 func (t *SimpleChaincode) enterHDWHLedgerDetails(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
