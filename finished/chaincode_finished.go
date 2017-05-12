@@ -20,45 +20,11 @@ import (
 	"errors"
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	"encoding/json"
 )
 
 // SimpleChaincode example simple Chaincode implementation
 type SimpleChaincode struct {
 }
-
-type ledger struct {
-	//Vendor string
-	Time string
-	Geolocation string
-	Vehicleno string
-	Vehicletype string
-	Items []struct{
-		Name string
-		Desc string
-		Qty int
-	}
-	Defects []struct{
-		Name string
-		Desc string
-		Qty int
-	}
-
-}
-
-type Warehouse struct {
-	Vendor string
-	Time string
-	Geolocation string
-	Vehicleno string
-	Vehicletype string
-	Name string
-	Desc string
-	ScannedItem int
-	Defect int
-}
-
-
 func main() {
 	err := shim.Start(new(SimpleChaincode))
 	if err != nil {
